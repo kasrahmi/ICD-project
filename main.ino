@@ -14,12 +14,30 @@ void encodeNRZL(byte* data, int length) {
   }
 }
 
+void encodeNRZI(byte* data, int length) {
+  bool lastBit = false;
+  for (int i = 0; i < length; i++) {
+    for (int bit = 7; bit >= 0; bit--) {
+      bool bitVal = (data[i] >> bit) & 0x01;
+      if (bitVal) {
+        lastBit = !lastBit;
+      }
+      digitalWrite(outputPin, lastBit); // High for 1, Low for 0
+      delay(1); // Adjust timing for baud rate
+    }
+  }
+}
+
 void setup() {
     pinMode(outputPin, OUTPUT);
     Serial.begin(9600);
 
-    Serial.println("Encoding data...");
+    Serial.println("NRZL Encoding data...");
     encodeNRZL(data, sizeof(data));
+    Serial.println("Data encoded");
+
+    Serial.println("NRZI Encoding data...");
+    encodeNRZI(data, sizeof(data));
     Serial.println("Data encoded");
 }
 
