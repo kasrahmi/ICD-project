@@ -8,7 +8,8 @@ void encodeNRZL(byte* data, int length) {
   for (int i = 0; i < length; i++) {
     for (int bit = 7; bit >= 0; bit--) {
       bool bitVal = (data[i] >> bit) & 0x01;
-      digitalWrite(outputPin, bitVal); // High for 1, Low for 0
+      bitval = !bitval;
+      digitalWrite(outputPin, bitVal); // High for 0, Low for 1
       delay(1); // Adjust timing for baud rate
     }
   }

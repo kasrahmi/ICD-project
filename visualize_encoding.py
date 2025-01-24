@@ -8,6 +8,7 @@ def encode_nrzl(data):
     for byte in data:
         for bit in range(7, -1, -1):
             bit_val = (byte >> bit) & 0x01
+            bit_val = not bit_val
             nrzl_signal.append(bit_val)
     return nrzl_signal
 
